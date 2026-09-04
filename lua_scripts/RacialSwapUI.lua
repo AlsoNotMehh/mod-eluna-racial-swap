@@ -189,7 +189,8 @@ local btnList = {}
 local groupCounterFS = {}
 
 local f = CreateFrame("Frame", "RacialSwapFrame", UIParent)
-f:SetSize(470, 360)
+f:SetWidth(470)
+f:SetHeight(360)
 f:SetPoint("CENTER")
 f:SetFrameStrata("DIALOG")
 f:SetToplevel(true)
@@ -219,7 +220,8 @@ titleText:SetText(TEXT.title)
 titleText:SetTextColor(1.0, 0.82, 0.0)
 
 local closeBtn = CreateFrame("Button", nil, f, "UIPanelCloseButton")
-closeBtn:SetSize(28, 28)
+closeBtn:SetWidth(28)
+closeBtn:SetHeight(28)
 closeBtn:SetPoint("TOPRIGHT", f, "TOPRIGHT", -4, -4)
 
 local GROUP_CONFIG = {
@@ -256,7 +258,8 @@ for _, cat in ipairs(CATEGORY_ORDER) do
         local btnY = START_Y - row * (ICON_SIZE + GAP_Y)
 
         local btn = CreateFrame("Button", nil, f)
-        btn:SetSize(ICON_SIZE, ICON_SIZE)
+        btn:SetWidth(ICON_SIZE)
+        btn:SetHeight(ICON_SIZE)
         btn:SetPoint("TOPLEFT", f, "TOPLEFT", btnX, btnY)
         btn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 
@@ -269,13 +272,15 @@ for _, cat in ipairs(CATEGORY_ORDER) do
         btn.category = cat
 
         local border = btn:CreateTexture(nil, "OVERLAY")
-        border:SetSize(ICON_SIZE + 14, ICON_SIZE + 14)
+        border:SetWidth(ICON_SIZE + 14)
+        border:SetHeight(ICON_SIZE + 14)
         border:SetPoint("CENTER")
         border:SetTexture("Interface\\Buttons\\UI-Quickslot2")
         btn.border = border
 
         local glow = btn:CreateTexture(nil, "OVERLAY")
-        glow:SetSize(ICON_SIZE + 6, ICON_SIZE + 6)
+        glow:SetWidth(ICON_SIZE + 6)
+        glow:SetHeight(ICON_SIZE + 6)
         glow:SetPoint("CENTER")
         glow:SetTexture("Interface\\Buttons\\UI-ActionButton-Border")
         glow:SetBlendMode("ADD")
@@ -326,7 +331,8 @@ for _, cat in ipairs(CATEGORY_ORDER) do
 end
 
 local applyBtn = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
-applyBtn:SetSize(140, 24)
+applyBtn:SetWidth(140)
+applyBtn:SetHeight(24)
 applyBtn:SetPoint("BOTTOM", f, "BOTTOM", 0, 16)
 applyBtn:SetText(TEXT.apply)
 
@@ -382,6 +388,10 @@ function _G.RefreshRacialUI()
 end
 
 function Handlers.Show(player, saved)
+    if type(player) == "table" and not player.Add and saved == nil then
+        saved = player
+    end
+
     for _, cat in ipairs(CATEGORY_ORDER) do
         selected[cat] = {}
         countSel[cat] = 0
